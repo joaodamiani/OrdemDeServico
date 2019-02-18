@@ -25,7 +25,7 @@ namespace OrdemDeServico
 
                     Console.WriteLine();
 
-                    Console.Write("Digite o nome: ");
+                    Console.Write("Digite o nome do resposavel: ");
                     string nome = Console.ReadLine();
 
                     OS os = new OS(dataDeABertura, nome);
@@ -73,11 +73,31 @@ namespace OrdemDeServico
                     Console.Clear();
                 }
 
+                else if (op == 3)
+                {
+                    Console.Write("Qual numero de OS que deseja encerrar: ");
+                    int numero = Convert.ToInt32(Console.ReadLine());
+
+                    var encerrarOS = listOS.SingleOrDefault(x => x.Numero == numero);
+
+                    Console.Clear();
+                    encerrarOS.ToString();
+
+                    Console.Write("Digite a data de encerramento: ");
+                    DateTime dataEncerramento = Convert.ToDateTime(Console.ReadLine());
+
+                    encerrarOS.EncerrarOS(dataEncerramento);
+
+                    Console.Clear();
+                    encerrarOS.ToString();
+                    Console.ReadKey();
+                }
+
                 else if (op == 4)
                 {
-                    Console.WriteLine("Qual numero de OS deseja incluir uma nova area?: ");
+                    Console.Write("Qual numero de OS que deseja incluir uma nova area?: ");
                     int numero = Convert.ToInt32(Console.ReadLine());
-                    var editOS = listOS.Single(x => x.Numero == numero);
+                    var editOS = listOS.SingleOrDefault(x => x.Numero == numero);
 
                     Console.Write("Quantas novas areas pretende cadastrar: ");
                     int numAreas = int.Parse(Console.ReadLine());

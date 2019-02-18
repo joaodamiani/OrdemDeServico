@@ -50,32 +50,40 @@ namespace OrdemDeServico.Entities
             return soma;
         }
 
+        public void EncerrarOS(DateTime termino)
+        {
+            DataEncerramento = termino;
+        }
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
 
             sb.Append("Numero: ");
             sb.AppendLine(Convert.ToString(Numero));
-            sb.Append("Nome: ");
+            sb.Append("Nome do responsavel: ");
             sb.AppendLine(Convert.ToString(Nome));
             sb.Append("Data de Abertura: ");
             sb.AppendLine(DataAbertura.ToString("dd/MM/yyyy"));
-            sb.Append("Data de Encerramento: ");
-            sb.AppendLine(DataEncerramento.ToString("dd/MM/yyyy"));
+            if (DataEncerramento != new DateTime())
+            {
+                sb.Append("Data de Encerramento: ");
+                sb.AppendLine(DataEncerramento.ToString("dd/MM/yyyy"));
+            }
 
 
             int i=1;
             foreach (Area ar in Area)
             {
                 sb.AppendLine($"Dados Area #{i}: ");
-                sb.Append("Codigo da area : ");
+                sb.Append("\tCodigo da area : ");
                 sb.AppendLine(Convert.ToString(ar.Codigo));
-                sb.Append("Tamanho da area : ");
+                sb.Append("\tTamanho da area : ");
                 sb.AppendLine(Convert.ToString(ar.TamanhoArea));
                 i++;
             }
 
-            sb.Append("Area da OS: ");
+            sb.Append("\tArea da OS: ");
             sb.AppendLine(Convert.ToString(AreaOS()));
 
             return sb.ToString();
