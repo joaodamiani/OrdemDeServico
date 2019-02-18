@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OrdemDeServico.Entities;
 using System.Threading;
+using OrdemDeServico.Entities.Exceptions;
 
 namespace OrdemDeServico.Entities
 {
@@ -52,7 +53,17 @@ namespace OrdemDeServico.Entities
 
         public void EncerrarOS(DateTime termino)
         {
-            DataEncerramento = termino;
+            int result = DateTime.Compare(termino, DataAbertura);
+
+            if (result < 0)
+            {
+                throw new OSException("A data de termino deve ser posterior a de abertura");
+            }
+            else
+            {
+                DataEncerramento = termino;
+            }
+
         }
 
         public override string ToString()
@@ -65,6 +76,7 @@ namespace OrdemDeServico.Entities
             sb.AppendLine(Convert.ToString(Nome));
             sb.Append("Data de Abertura: ");
             sb.AppendLine(DataAbertura.ToString("dd/MM/yyyy"));
+
             if (DataEncerramento != new DateTime())
             {
                 sb.Append("Data de Encerramento: ");
@@ -82,8 +94,8 @@ namespace OrdemDeServico.Entities
                 sb.AppendLine(Convert.ToString(ar.TamanhoArea));
                 i++;
             }
-
-            sb.Append("\tArea da OS: ");
+            sb.AppendLine("\n");
+            sb.Append("Area da OS: ");
             sb.AppendLine(Convert.ToString(AreaOS()));
 
             return sb.ToString();
