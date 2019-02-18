@@ -8,7 +8,7 @@ namespace OrdemDeServico.Entities
 {
     class Area
     {
-        
+
         public int Codigo { get; set; }
         public double TamanhoArea { get; set; }
         public Area(int codigo, double tamanhoArea)
