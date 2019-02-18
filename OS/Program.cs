@@ -42,7 +42,16 @@ namespace OrdemDeServico
                         Console.WriteLine();
 
                         Console.Write("Quantas areas pretende cadastrar: ");
-                        int numAreas = int.Parse(Console.ReadLine());
+                        int numAreas;
+
+                        try
+                        {
+                            numAreas = int.Parse(Console.ReadLine());
+                        }
+                        catch (Exception)
+                        {
+                            numAreas = 1; // caso ocorrra um erro o usuario é obrigado a cadastrar pelo menos 1 Area
+                        }
 
                         // chamada da função para cadastramento de novas areas
                         CadastrarArea(numAreas, os);
@@ -133,6 +142,7 @@ namespace OrdemDeServico
 
                         ToBeContinue();
                     }
+
                     else if (op == 5)
                     {
                         try
@@ -234,19 +244,31 @@ namespace OrdemDeServico
         {
             for (int i = 1; i <= numAreas; i++)
             {
-                Console.WriteLine($"Digite os dados da Area #{i}");
+                try
+                {
+                    Console.WriteLine($"Digite os dados da Area #{i}");
 
-                Console.Write("Digite o codigo da area: ");
-                int codigoArea = Convert.ToInt32(Console.ReadLine());
+                    Console.Write("Digite o codigo da area: ");
+                    int codigoArea = Convert.ToInt32(Console.ReadLine());
 
-                Console.Write("Digite o tamanho da area: ");
-                double tamanhoDaArea = double.Parse(Console.ReadLine().ToString(CultureInfo.InvariantCulture));
+                    Console.Write("Digite o tamanho da area: ");
+                    double tamanhoDaArea = double.Parse(Console.ReadLine().ToString(CultureInfo.InvariantCulture));
 
-                // Estanciação de uma nova area
-                Area a = new Area(codigoArea, tamanhoDaArea);
+                    // Estanciação de uma nova area
+                    Area a = new Area(codigoArea, tamanhoDaArea);
 
-                // função de adicionar area na classe OS
-                os.AddArea(a);
+                    // função de adicionar area na classe OS
+                    os.AddArea(a);
+                }
+                catch (Exception e)
+                {
+                    // exceção de tratamento caso ocorra um erro na hora de cadastrar uma nova area
+                    Console.WriteLine(e.Message);
+                    ToBeContinue();
+                    // volta o contato ha 0 caso ocorra um erro, com isso fica obrigatorio cadastrar a area de maneira correta;
+                    i = 0;
+                }
+                
             }
         }
 
